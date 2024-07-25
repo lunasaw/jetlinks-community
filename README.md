@@ -13,10 +13,10 @@
 [![QQ②群324606263](https://img.shields.io/badge/QQ②群-324606263-brightgreen)](https://qm.qq.com/cgi-bin/qm/qr?k=IMas2cH-TNsYxUcY8lRbsXqPnA2sGHYQ&jump_from=webapi)
 [![QQ①群2021514](https://img.shields.io/badge/QQ①群-2021514-brightgreen)](https://qm.qq.com/cgi-bin/qm/qr?k=LGf0OPQqvLGdJIZST3VTcypdVWhdfAOG&jump_from=webapi)
 
-JetLinks 基于Java8,Spring Boot 2.x,WebFlux,Netty,Vert.x,Reactor等开发, 
+JetLinks 基于Java8,Spring Boot 2.x,WebFlux,Netty,Vert.x,Reactor等开发,
 是一个开箱即用,可二次开发的企业级物联网基础平台。平台实现了物联网相关的众多基础功能,
 能帮助你快速建立物联网相关业务系统。
- 
+
 
 ## 核心特性
 
@@ -120,3 +120,4 @@ TCP/UDP/MQTT/HTTP、TLS/DTLS、不同厂商、不同设备、不同报文、统�
 
 [![Stargazers over time](https://starchart.cc/jetlinks/jetlinks-community.svg?variant=adaptive)](https://starchart.cc/jetlinks/jetlinks-community)
 
+docker run -it --rm -p 9000:80 -e "API_BASE_PATH=http://192.168.64.1:8848/" registry.cn-shenzhen.aliyuncs.com/jetlinks/jetlinks-ui-vue:2.1.0-SNAPSHOT

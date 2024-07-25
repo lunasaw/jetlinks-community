@@ -1,5 +1,6 @@
 package org.jetlinks.community.network.mqtt.gateway.device;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jetlinks.core.ProtocolSupports;
 import org.jetlinks.core.device.DeviceRegistry;
 import org.jetlinks.core.device.session.DeviceSessionManager;
@@ -19,6 +20,7 @@ import reactor.core.publisher.Mono;
 import java.util.Objects;
 
 @Component
+@Slf4j
 public class MqttClientDeviceGatewayProvider implements DeviceGatewayProvider {
     private final NetworkManager networkManager;
 
@@ -35,6 +37,8 @@ public class MqttClientDeviceGatewayProvider implements DeviceGatewayProvider {
                                            DeviceSessionManager sessionManager,
                                            DecodedClientMessageHandler clientMessageHandler,
                                            ProtocolSupports protocolSupports) {
+        log.warn("协议初始化 MqttClientDeviceGatewayProvider::networkManager = {}, registry = {}, sessionManager = {}, clientMessageHandler = {}, protocolSupports = {}", networkManager, registry, sessionManager, clientMessageHandler, protocolSupports);
+
         this.networkManager = networkManager;
         this.registry = registry;
         this.sessionManager = sessionManager;

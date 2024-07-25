@@ -126,6 +126,7 @@ public class DefaultNetworkManager implements NetworkManager, BeanPostProcessor,
     @Override
     public Object postProcessAfterInitialization(@Nonnull Object bean, @Nonnull String beanName) throws BeansException {
         if (bean instanceof NetworkProvider) {
+            log.info("注册网络工作器 postProcessAfterInitialization::bean = {}, beanName = {}", bean, beanName);
             register(((NetworkProvider) bean));
         }
         return bean;
@@ -191,6 +192,7 @@ public class DefaultNetworkManager implements NetworkManager, BeanPostProcessor,
     @Override
     public void run(String... args) {
         //定时检查网络组件状态
+        log.warn("每隔10s定时检查网络组件状态 run::");
         Flux.interval(Duration.ofSeconds(10))
             .subscribe(t -> this.checkNetwork());
     }

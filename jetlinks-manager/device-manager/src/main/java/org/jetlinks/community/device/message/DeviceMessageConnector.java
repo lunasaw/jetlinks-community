@@ -256,18 +256,23 @@ public class DeviceMessageConnector implements DecodedClientMessageHandler {
         message.addHeader(PropertyConstants.uid, IDGenerator.SNOW_FLAKE_STRING.generate());
         return this
             .getTopic(message)
-            .flatMap(topic -> eventBus.publish(topic, message).then())
+            .flatMap(topic -> {
+                log.info("onMessage::收到消息发送事件 message = {}", message);
+                return eventBus.publish(topic, message).then();
+            })
             .onErrorResume(doOnError)
             .then();
     }
 
     private Flux<String> getTopic(Message message) {
         Flux<String> topicsStream = createDeviceMessageTopic(registry, message);
-        if (message instanceof ChildDeviceMessage) { //子设备消息
+        if (message instanceof ChildDeviceMessage) {
+            //子设备消息
             return this
                 .onMessage(((ChildDeviceMessage) message).getChildDeviceMessage())
                 .thenMany(topicsStream);
-        } else if (message instanceof ChildDeviceMessageReply) { //子设备消息
+        } else if (message instanceof ChildDeviceMessageReply) {
+            //子设备消息
             return this
                 .onMessage(((ChildDeviceMessageReply) message).getChildDeviceMessage())
                 .thenMany(topicsStream);

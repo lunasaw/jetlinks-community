@@ -1,10 +1,12 @@
 package org.jetlinks.community.gateway.monitor;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
-
+@Slf4j
 public class GatewayMonitors {
 
 
@@ -13,16 +15,12 @@ public class GatewayMonitors {
     static final NoneDeviceGatewayMonitor nonDevice = new NoneDeviceGatewayMonitor();
 
 
-    static {
-
-    }
-
-
     public static void register(DeviceGatewayMonitorSupplier supplier) {
         deviceGatewayMonitorSuppliers.add(supplier);
     }
 
     private static DeviceGatewayMonitor doGetDeviceGatewayMonitor(String id, String... tags) {
+        log.warn("设备接入创建网关消息监听器 doGetDeviceGatewayMonitor::id = {}, tags = {}", id, tags);
         List<DeviceGatewayMonitor> all = deviceGatewayMonitorSuppliers.stream()
             .map(supplier -> supplier.getDeviceGatewayMonitor(id, tags))
             .filter(Objects::nonNull)

@@ -52,7 +52,8 @@ public class DeviceMessageController {
         return registry
             .getDevice(deviceId)
             .switchIfEmpty(ErrorUtils.notFound("设备不存在"))
-            .map(DeviceOperator::messageSender)//发送消息到设备
+            .map(DeviceOperator::messageSender)
+            //发送消息到设备
             .map(sender -> sender.readProperty(property).messageId(IDGenerator.SNOW_FLAKE_STRING.generate()))
             .flatMapMany(ReadPropertyMessageSender::send)
             .map(mapReply(ReadPropertyMessageReply::getProperties));

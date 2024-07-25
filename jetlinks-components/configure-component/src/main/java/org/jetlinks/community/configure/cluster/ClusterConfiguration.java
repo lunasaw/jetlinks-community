@@ -72,9 +72,7 @@ public class ClusterConfiguration {
 
     @Bean
     public EventBusStorageManager eventBusStorageManager(ClusterManager clusterManager, EventBus eventBus) {
-        return new EventBusStorageManager(clusterManager,
-                                          eventBus,
-                                          -1);
+        return new EventBusStorageManager(clusterManager, eventBus, -1);
     }
 
     @Bean(initMethod = "startup")

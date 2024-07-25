@@ -2,6 +2,7 @@ package org.jetlinks.community.configure.device;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.guava.CaffeinatedGuava;
+import lombok.extern.slf4j.Slf4j;
 import org.hswebframework.web.crud.annotation.EnableEasyormRepository;
 import org.jetlinks.core.ProtocolSupports;
 import org.jetlinks.core.cluster.ClusterManager;
@@ -26,15 +27,29 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author weidian
+ */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnBean(ProtocolSupports.class)
+@Slf4j
 public class DeviceClusterConfiguration {
 
+    /**
+     * 设备注册中心
+     * @param supports 协议支持
+     * @param manager 集群管理
+     * @param storageManager 配置存储管理器
+     * @param handler 设备操作
+     * @return 设备注册中心
+     */
     @Bean
     public ClusterDeviceRegistry deviceRegistry(ProtocolSupports supports,
                                                 ClusterManager manager,
                                                 ConfigStorageManager storageManager,
                                                 DeviceOperationBroker handler) {
+
+        log.info("设备注册中心初始化 deviceRegistry::supports = {}, manager = {}, storageManager = {}, handler = {}", supports, manager, storageManager, handler);
 
         return new ClusterDeviceRegistry(supports,
                                          storageManager,

@@ -11,6 +11,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
+/**
+ * @author weidian
+ */
 @Slf4j
 @Getter
 @Setter
@@ -24,7 +27,9 @@ public class LazyInitManagementProtocolSupports extends DefaultProtocolSupportMa
     }
 
 
+    @Override
     public void init() {
+        log.info("init protocol support manager");
         super.init();
     }
 
