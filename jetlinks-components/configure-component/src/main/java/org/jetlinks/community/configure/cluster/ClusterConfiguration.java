@@ -6,6 +6,7 @@ import io.scalecube.services.transport.rsocket.RSocketClientTransportFactory;
 import io.scalecube.services.transport.rsocket.RSocketServerTransportFactory;
 import io.scalecube.services.transport.rsocket.RSocketServiceTransport;
 import io.scalecube.transport.netty.tcp.TcpTransportFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.jetlinks.core.cluster.ClusterManager;
 import org.jetlinks.core.event.EventBus;
 import org.jetlinks.supports.cluster.redis.RedisClusterManager;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(ClusterProperties.class)
 @ConditionalOnClass(ExtendedCluster.class)
+@Slf4j
 public class ClusterConfiguration {
 
     @Bean
@@ -82,6 +84,7 @@ public class ClusterConfiguration {
 
     @Bean(initMethod = "startAwait", destroyMethod = "stopAwait")
     public ScalecubeRpcManager rpcManager(ExtendedCluster cluster, ClusterProperties properties) {
+        log.info("ScalecubeRpcManager rpcManager::cluster = {}, properties = {}", cluster, properties);
         return new ScalecubeRpcManager(cluster,
                                        () -> new RSocketServiceTransport()
                                            .serverTransportFactory(RSocketServerTransportFactory.tcp(properties.getRpcPort()))

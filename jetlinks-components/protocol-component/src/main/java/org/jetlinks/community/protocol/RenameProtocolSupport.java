@@ -3,6 +3,7 @@ package org.jetlinks.community.protocol;
 import lombok.AllArgsConstructor;
 import lombok.Generated;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.jetlinks.core.ProtocolSupport;
 import org.jetlinks.core.device.*;
 import org.jetlinks.core.event.EventBus;
@@ -28,8 +29,8 @@ import java.util.Map;
  * @author zhouhao
  * @since 1.2
  */
-@AllArgsConstructor
 @Generated
+@Slf4j
 public class RenameProtocolSupport implements ProtocolSupport {
 
     public static final JetLinksDeviceMetadataCodec metadataCodec = new JetLinksDeviceMetadataCodec();
@@ -42,9 +43,20 @@ public class RenameProtocolSupport implements ProtocolSupport {
     @Getter
     private final String description;
 
+    /**
+     * 真正协议支持
+     */
     private final ProtocolSupport target;
 
     private final EventBus eventBus;
+
+    public RenameProtocolSupport(String id, String name, String description, ProtocolSupport target, EventBus eventBus) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.target = target;
+        this.eventBus = eventBus;
+    }
 
     @Override
     public Flux<? extends Transport> getSupportedTransport() {
@@ -121,6 +133,7 @@ public class RenameProtocolSupport implements ProtocolSupport {
 
     @Override
     public void init(Map<String, Object> configuration) {
+        log.info("这里调用的是动态加载的协议的init init::configuration = {}", configuration);
         target.init(configuration);
     }
 

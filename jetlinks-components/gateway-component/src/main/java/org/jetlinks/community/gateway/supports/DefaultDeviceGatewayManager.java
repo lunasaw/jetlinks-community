@@ -1,5 +1,6 @@
 package org.jetlinks.community.gateway.supports;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.jetlinks.community.gateway.DeviceGateway;
 import org.jetlinks.community.gateway.DeviceGatewayManager;
@@ -52,7 +53,10 @@ public class DefaultDeviceGatewayManager implements DeviceGatewayManager {
         return propertiesManager
             .getProperties(id)
             .switchIfEmpty(Mono.error(() -> new UnsupportedOperationException("网关配置[" + id + "]不存在")))
-            .flatMap(properties -> getProviderNow(properties.getProvider()).createDeviceGateway(properties));
+            .flatMap(properties -> {
+                log.info("获取网关 createGateway::id = {}, properties = {}", id, JSON.toJSONString(properties));
+                return getProviderNow(properties.getProvider()).createDeviceGateway(properties);
+            });
 
     }
 

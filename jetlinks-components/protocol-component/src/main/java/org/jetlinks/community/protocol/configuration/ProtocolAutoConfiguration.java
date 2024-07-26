@@ -1,5 +1,6 @@
 package org.jetlinks.community.protocol.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jetlinks.community.protocol.*;
 import org.jetlinks.community.protocol.local.LocalProtocolSupportLoader;
 import org.jetlinks.core.ProtocolSupport;
@@ -24,6 +25,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.reactive.function.client.WebClient;
 
+/**
+ * @author weidian
+ */
+@Slf4j
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(DeviceClusterConfiguration.class)
 public class ProtocolAutoConfiguration {
@@ -59,6 +64,7 @@ public class ProtocolAutoConfiguration {
     @Bean
     public ProtocolSupportLoader protocolSupportLoader(EventBus eventBus,
                                                        ObjectProvider<ProtocolSupportLoaderProvider> providers) {
+        log.info("初始化协议加载器 protocolSupportLoader::eventBus = {}, providers = {}", eventBus, providers);
         SpringProtocolSupportLoader loader = new SpringProtocolSupportLoader(eventBus);
         providers.forEach(loader::register);
         return loader;

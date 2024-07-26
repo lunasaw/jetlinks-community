@@ -9,6 +9,9 @@ import org.elasticsearch.transport.Netty4Plugin;
 
 import java.util.Collections;
 
+/**
+ * @author weidian
+ */
 @Slf4j
 public class EmbeddedElasticSearch extends Node {
 

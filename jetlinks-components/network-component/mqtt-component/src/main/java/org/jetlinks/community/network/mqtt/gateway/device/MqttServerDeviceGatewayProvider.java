@@ -29,18 +29,14 @@ public class MqttServerDeviceGatewayProvider implements DeviceGatewayProvider {
 
     private final DecodedClientMessageHandler messageHandler;
 
-    private final ProtocolSupports protocolSupports;
-
     public MqttServerDeviceGatewayProvider(NetworkManager networkManager,
                                            DeviceRegistry registry,
                                            DeviceSessionManager sessionManager,
-                                           DecodedClientMessageHandler messageHandler,
-                                           ProtocolSupports protocolSupports) {
+                                           DecodedClientMessageHandler messageHandler) {
         this.networkManager = networkManager;
         this.registry = registry;
         this.sessionManager = sessionManager;
         this.messageHandler = messageHandler;
-        this.protocolSupports = protocolSupports;
     }
 
     @Override

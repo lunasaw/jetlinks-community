@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.jetlinks.community.things.data.operations.DataSettings;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * @author weidian
+ */
 @ConfigurationProperties(prefix = "jetlinks.device.storage")
 @Getter
 @Setter

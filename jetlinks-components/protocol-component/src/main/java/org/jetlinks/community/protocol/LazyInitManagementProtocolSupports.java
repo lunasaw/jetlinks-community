@@ -12,6 +12,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
 /**
+ * 懒加载协议管理器
  * @author weidian
  */
 @Slf4j

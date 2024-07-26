@@ -2,6 +2,7 @@ package org.jetlinks.community.protocol;
 
 import lombok.AllArgsConstructor;
 import lombok.Generated;
+import lombok.extern.slf4j.Slf4j;
 import org.jetlinks.core.ProtocolSupport;
 import org.jetlinks.core.event.EventBus;
 import org.jetlinks.supports.protocol.management.ProtocolSupportDefinition;
@@ -20,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @AllArgsConstructor
 @Generated
+@Slf4j
 public class SpringProtocolSupportLoader implements ProtocolSupportLoader {
 
     private final Map<String, ProtocolSupportLoaderProvider> providers = new ConcurrentHashMap<>();
@@ -35,7 +37,11 @@ public class SpringProtocolSupportLoader implements ProtocolSupportLoader {
         return Mono
             .justOrEmpty(this.providers.get(definition.getProvider()))
             .switchIfEmpty(Mono.error(() -> new UnsupportedOperationException("unsupported provider:" + definition.getProvider())))
-            .flatMap((provider) -> provider.load(definition))
+            .flatMap((provider) -> {
+                Mono<? extends ProtocolSupport> load = provider.load(definition);
+                log.info("协议加载完成 load::load = {}", load.blockOptional().get().getDescription());
+                return load;
+            })
             .map(loaded -> new RenameProtocolSupport(definition.getId(), definition.getName(), definition.getDescription(), loaded, eventBus));
     }
 

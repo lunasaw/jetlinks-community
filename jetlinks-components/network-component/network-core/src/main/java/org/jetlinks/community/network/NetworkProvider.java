@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 /**
  * 网络组件支持提供商
  *
+ * @author weidian
  * @param <P> 网络组件类型
  */
 public interface NetworkProvider<P> {

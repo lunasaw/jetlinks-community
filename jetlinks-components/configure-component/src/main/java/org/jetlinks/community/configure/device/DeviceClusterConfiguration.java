@@ -90,6 +90,7 @@ public class DeviceClusterConfiguration {
                                                                                DeviceRegistry registry,
                                                                                MessageHandler messageHandler,
                                                                                DecodedClientMessageHandler clientMessageHandler) {
+        log.info("集群消息发送初始化 defaultSendToDeviceMessageHandler::sessionManager = {}, registry = {}, messageHandler = {}, clientMessageHandler = {}", sessionManager, registry, messageHandler, clientMessageHandler);
         return new ClusterSendToDeviceMessageHandler(sessionManager, messageHandler, registry, clientMessageHandler);
     }
 

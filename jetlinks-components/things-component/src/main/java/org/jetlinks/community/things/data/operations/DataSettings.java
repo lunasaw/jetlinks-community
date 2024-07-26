@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetlinks.community.utils.MessageTypeMatcher;
 
+/**
+ * @author weidian
+ */
 @Getter
 @Setter
 public class DataSettings {

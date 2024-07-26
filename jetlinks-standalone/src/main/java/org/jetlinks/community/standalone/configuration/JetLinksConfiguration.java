@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.unit.DataSize;
 
+/**
+ * @author weidian
+ */
 @Configuration
 @EnableConfigurationProperties(JetLinksProperties.class)
 @Slf4j

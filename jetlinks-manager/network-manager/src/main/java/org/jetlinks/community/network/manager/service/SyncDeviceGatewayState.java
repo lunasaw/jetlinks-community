@@ -34,7 +34,7 @@ public class SyncDeviceGatewayState implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        log.debug("start device gateway in {} later", gatewayStartupDelay);
+        log.debug("启动网关初始化 start device gateway in {} later", gatewayStartupDelay);
         Mono.delay(gatewayStartupDelay)
             .then(
                 deviceGatewayService

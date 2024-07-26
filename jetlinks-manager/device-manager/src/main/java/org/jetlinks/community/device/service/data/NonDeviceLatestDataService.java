@@ -11,6 +11,9 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author weidian
+ */
 public class NonDeviceLatestDataService implements DeviceLatestDataService {
     @Override
     public Mono<Void> upgradeMetadata(String productId, DeviceMetadata metadata) {

@@ -134,6 +134,12 @@ jetlinks:
   protocol:
     spi:
       enabled: true # 为true时开启自动加载通过依赖引入的协议包
+  device:
+    storage:
+      enable-last-data-in-db: true
+      latest:
+        buffer: 200
+
 logging:
   level:
     org.jetlinks: debug

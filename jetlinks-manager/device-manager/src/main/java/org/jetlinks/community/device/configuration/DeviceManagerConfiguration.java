@@ -24,6 +24,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 
+/**
+ * @author weidian
+ */
 @Configuration
 @EnableConfigurationProperties(DeviceDataStorageProperties.class)
 public class DeviceManagerConfiguration {
@@ -78,6 +81,10 @@ public class DeviceManagerConfiguration {
 
     }
 
+    /**
+     * 不存储设备最新数据存储到DB
+     * @return
+     */
     @Bean
     @ConditionalOnProperty(
         prefix = "jetlinks.device.storage",
