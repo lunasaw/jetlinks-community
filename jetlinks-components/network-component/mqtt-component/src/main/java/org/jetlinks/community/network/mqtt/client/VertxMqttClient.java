@@ -154,52 +154,54 @@ public class VertxMqttClient implements MqttClient {
     }
 
     @Override
-    public Flux<MqttMessage> subscribe(List<String> topics, int qos) {
+    public Flux<MqttMessage> subscribe(List<String> topics, int qos) { // 方法声明，订阅多个MQTT主题，返回一个Flux<MqttMessage>对象
         return Flux.create(sink -> {
+            // 创建一个Flux来处理MQTT消息的流
 
-            Disposable.Composite composite = Disposables.composite();
+            Disposable.Composite composite = Disposables.composite(); // 创建一个可合并的Disposable，用于处理订阅的资源
 
-            for (String topic : topics) {
-                String realTopic = parseTopic(topic);
-                String completeTopic = getCompleteTopic(topic);
+            for (String topic : topics) { // 遍历每个订阅的主题
+                String realTopic = parseTopic(topic); // 解析实际主题
+                String completeTopic = getCompleteTopic(topic); // 获取完整的主题名称
 
-                Topic<Tuple3<String, FluxSink<MqttMessage>, Integer>> sinkTopic = subscriber
-                    .append(realTopic
-                                .replace("#", "**")
-                                .replace("+", "*"));
+                Topic<Tuple3<String, FluxSink<MqttMessage>, Integer>> sinkTopic = subscriber // 获取与主题相关的Topic对象
+                                                                                             .append(realTopic
+                                                                                                         .replace("#", "**") // 将MQTT通配符#替换为**
+                                                                                                         .replace("+", "*")); // 将MQTT通配符+替换为*
 
-                Tuple3<String, FluxSink<MqttMessage>, Integer> topicQos = Tuples.of(topic, sink, qos);
+                Tuple3<String, FluxSink<MqttMessage>, Integer> topicQos = Tuples.of(topic, sink, qos); // 创建一个包含主题、sink和qos的元组
 
-                boolean first = sinkTopic.getSubscribers().isEmpty();
-                sinkTopic.subscribe(topicQos);
+                boolean first = sinkTopic.getSubscribers().isEmpty(); // 检查是否是首次订阅
+                sinkTopic.subscribe(topicQos); // 订阅主题
                 composite.add(() -> {
-                    if (!sinkTopic.unsubscribe(topicQos).isEmpty() && isAlive() && sinkTopic.getSubscribers().isEmpty()) {
-                        client.unsubscribe(convertMqttTopic(completeTopic), result -> {
-                            if (result.succeeded()) {
-                                log.debug("unsubscribe mqtt topic {}", completeTopic);
-                            } else {
-                                log.debug("unsubscribe mqtt topic {} error", completeTopic, result.cause());
+                    // 向composite添加一个取消订阅的操作
+                    if (!sinkTopic.unsubscribe(topicQos).isEmpty() && isAlive() && sinkTopic.getSubscribers().isEmpty()) { // 检查是否需要取消订阅
+                        client.unsubscribe(convertMqttTopic(completeTopic), result -> { // 取消订阅MQTT主题
+                            if (result.succeeded()) { // 取消订阅成功
+                                log.debug("unsubscribe mqtt topic {}", completeTopic); // 记录取消订阅日志
+                            } else { // 取消订阅失败
+                                log.debug("unsubscribe mqtt topic {} error", completeTopic, result.cause()); // 记录错误日志
                             }
                         });
                     }
                 });
 
-                //首次订阅
+                // 首次订阅
                 if (isAlive() && first) {
-                    log.debug("subscribe mqtt topic {}", completeTopic);
-                    client.subscribe(convertMqttTopic(completeTopic), qos, result -> {
-                        if (!result.succeeded()) {
-                            sink.error(result.cause());
+                    log.debug("subscribe mqtt topic {}", completeTopic); // 记录订阅日志
+                    client.subscribe(
+                        convertMqttTopic(completeTopic), qos, result -> { // 订阅MQTT主题
+                        if (!result.succeeded()) { // 订阅失败
+                            sink.error(result.cause()); // 向sink传递错误
                         }
                     });
                 }
             }
 
-            sink.onDispose(composite);
+            sink.onDispose(composite); // 设置sink的onDispose操作
 
         });
     }
-
     private Mono<Void> doPublish(MqttMessage message) {
         return Mono.create((sink) -> {
             ByteBuf payload = message.getPayload();

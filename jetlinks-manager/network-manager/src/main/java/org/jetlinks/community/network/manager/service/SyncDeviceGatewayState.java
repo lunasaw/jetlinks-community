@@ -8,6 +8,7 @@ import org.jetlinks.community.network.manager.enums.NetworkConfigState;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
@@ -43,7 +44,9 @@ public class SyncDeviceGatewayState implements CommandLineRunner {
                     .and(DeviceGatewayEntity::getState, NetworkConfigState.enabled)
                     .fetch()
                     .map(DeviceGatewayEntity::getId)
+                    // 获取网关
                     .flatMap(deviceGatewayManager::getGateway)
+                    // 启动网关
                     .flatMap(DeviceGateway::startup)
                     .onErrorContinue((err, obj) -> {
                         log.error(err.getMessage(), err);

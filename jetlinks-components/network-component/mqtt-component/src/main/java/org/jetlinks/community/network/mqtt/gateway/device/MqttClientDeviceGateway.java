@@ -1,5 +1,6 @@
 package org.jetlinks.community.network.mqtt.gateway.device;
 
+import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.jetlinks.core.device.DeviceOperator;
 import org.jetlinks.core.device.DeviceRegistry;
 import org.jetlinks.core.device.session.DeviceSessionManager;
 import org.jetlinks.core.message.DeviceMessage;
+import org.jetlinks.core.message.Message;
 import org.jetlinks.core.message.codec.*;
 import org.jetlinks.core.route.MqttRoute;
 import org.jetlinks.core.utils.TopicUtils;
@@ -20,7 +22,10 @@ import org.jetlinks.community.network.mqtt.client.MqttClient;
 import org.jetlinks.community.network.mqtt.gateway.device.session.UnknownDeviceMqttClientSession;
 import org.jetlinks.community.gateway.DeviceGatewayHelper;
 import org.jetlinks.supports.server.DecodedClientMessageHandler;
+import org.reactivestreams.Publisher;
 import reactor.core.Disposable;
+import reactor.core.publisher.BaseSubscriber;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import reactor.util.function.Tuple2;
@@ -28,6 +33,7 @@ import reactor.util.function.Tuples;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
 /**
  * MQTT Client 设备网关，使用网络组件中的MQTT Client来处理设备数据
@@ -61,6 +67,9 @@ public class MqttClientDeviceGateway extends AbstractDeviceGateway {
         this.registry = Objects.requireNonNull(registry, "registry");
         setProtocol(protocol);
         this.helper = new DeviceGatewayHelper(registry, sessionManager, clientMessageHandler);
+        doOnStateChange((before, after) -> {
+            log.info("网关[{}]状态改变:{}", id, after);
+        });
     }
 
     protected Mono<ProtocolSupport> getProtocol() {
@@ -93,6 +102,7 @@ public class MqttClientDeviceGateway extends AbstractDeviceGateway {
     }
 
     protected void doReloadRoute(List<MqttRoute> routes) {
+        log.warn("网关组件启动 doReloadRoute::routes = {}", JSON.toJSONString(routes));
         Map<RouteKey, Tuple2<Integer, Disposable>> readyToRemove = new HashMap<>(this.routes);
 
         for (MqttRoute route : routes) {
@@ -136,20 +146,38 @@ public class MqttClientDeviceGateway extends AbstractDeviceGateway {
         return mqttClient
             .subscribe(Collections.singletonList(topic), qos)
             .filter(msg -> isStarted())
-            .flatMap(mqttMessage -> codecMono
-                .flatMapMany(codec -> codec
-                    .decode(FromDeviceMessageContext.of(
-                        new UnknownDeviceMqttClientSession(getId(), mqttClient, monitor),
-                        mqttMessage,
-                        registry,
-                        msg -> handleMessage(mqttMessage, msg).then())))
-                .cast(DeviceMessage.class)
-                .concatMap(message -> handleMessage(mqttMessage, message))
-                .subscribeOn(Schedulers.parallel())
-                .onErrorResume((err) -> {
-                    log.error("handle mqtt client message error:{}", mqttMessage, err);
-                    return Mono.empty();
-                }), Integer.MAX_VALUE)
+            .flatMap(mqttMessage -> {
+                return codecMono
+                    .flatMapMany(codec -> {
+                        Flux<? extends Message> decode = (Flux<? extends Message>) codec
+                            .decode(FromDeviceMessageContext.of(
+                                new UnknownDeviceMqttClientSession(getId(), mqttClient, monitor),
+                                mqttMessage,
+                                registry,
+                                msg -> handleMessage(mqttMessage, msg).then()));
+
+                        decode.subscribe((messageValue)->{
+                            log.info("doSubscribe::topic = {}, qos = {}, message = {}", topic, qos, messageValue);
+                        });
+
+                        decode.subscribe(new BaseSubscriber<Message>() {
+                            @Override
+                            protected void hookOnNext(Message value) {
+                                System.out.println(value);
+                            }
+                        });
+                        log.info("doSubscribe::topic = {}, qos = {}, decode = {}", topic, qos);
+                        return decode;
+
+                    })
+                    .cast(DeviceMessage.class)
+                    .concatMap(message -> handleMessage(mqttMessage, message))
+                    .subscribeOn(Schedulers.parallel())
+                    .onErrorResume((err) -> {
+                        log.error("handle mqtt client message error:{}", mqttMessage, err);
+                        return Mono.empty();
+                    });
+            }, Integer.MAX_VALUE)
             .contextWrite(ReactiveLogger.start("gatewayId", getId()))
             .subscribe();
     }

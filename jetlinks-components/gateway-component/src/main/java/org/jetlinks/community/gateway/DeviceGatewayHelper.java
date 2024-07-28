@@ -2,6 +2,7 @@ package org.jetlinks.community.gateway;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.jetlinks.core.device.DeviceConfigKey;
 import org.jetlinks.core.device.DeviceOperator;
 import org.jetlinks.core.device.DeviceRegistry;
@@ -35,6 +36,7 @@ import java.util.function.Supplier;
  */
 @AllArgsConstructor
 @Getter
+@Slf4j
 public class DeviceGatewayHelper {
 
     private final DeviceRegistry registry;
@@ -288,6 +290,7 @@ public class DeviceGatewayHelper {
                                                  DeviceMessage message,
                                                  Function<DeviceOperator, Mono<DeviceSession>> sessionBuilder,
                                                  Supplier<Mono<DeviceOperator>> deviceNotFoundCallback) {
+        log.info("createNewSession::deviceId = {}, message = {}, sessionBuilder = {}, deviceNotFoundCallback = {}", deviceId, message, sessionBuilder, deviceNotFoundCallback);
         return registry
             .getDevice(deviceId)
             .switchIfEmpty(Mono.defer(deviceNotFoundCallback))
