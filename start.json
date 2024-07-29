@@ -1,0 +1,151 @@
+// 产品创建
+{
+    "productHead":"", // 产品头图
+    "productName":"",// 产品名称
+    "productCategory":"", // 产品所属分类 枚举定义
+    "deviceType":"",   // 设备接入类型 枚举定义 1网关 2网关子设备 3直连设备
+    "deviceLinkType":"",// 设备接入方式 1WIFI wifi 2CELLULAR 蜂窝 3ETHERNET 以太网 4OTHER 其他
+    "productDescription":"" // 产品描述
+}
+{
+    "productId":""// 产品Id
+}
+
+// 产品列表
+{
+    "productCategory":"",// 产品分类
+    "pageNo":1,// 页码 从1开始
+    "pageSize":10// 每页条数
+}
+
+{
+    "productId":"",// 产品Id
+    "productHead":"",// 产品头图
+    "productName":"",// 产品名称
+    "productCategory":"",// 产品所属分类 枚举定义
+    "deviceType":"",// 设备接入类型 枚举定义 1网关 2网关子设备 3直连设备
+    "updateTime":"",//更新时间
+    "publishStatus":"",// 发布状态
+    "deviceNumber":""// 设备数量
+}
+
+// 产品详情
+{
+    "productInfo": { // 产品信息
+        "productId":"",// 产品Id
+        "productHead":"",// 产品头图
+        "productName":"",// 产品名称
+        "productCategory":"",// 产品所属分类 枚举定义
+        "deviceType":"",// 设备接入类型 枚举定义 1网关 2网关子设备 3直连设备
+        "updateTime":"",//更新时间
+        "publishStatus":"",// 发布状态
+        "deviceNumber":"",// 设备数量
+        "createName":"",// 创建人
+        "createTime":"",// 创建时间
+        "updateTime":"",// 更新时间
+        "productDescription":""// 产品描述
+    },
+    "productDetail":[ // 产品档案
+        {
+            "key":"门禁类型",
+            "value":"电磁门"
+        }
+    ]
+}
+
+// 物模型定义
+{
+    "functions": [ // 功能定义
+        {
+            "output": {
+                "falseValue": "false",
+                "trueText": "是",
+                "trueValue": "true",
+                "falseText": "否",
+                "type": "boolean"
+            },
+            "async": false,
+            "inputs": [
+                {
+                    "valueType": {
+                        "type": "string"
+                    },
+                    "name": "NVR标识",
+                    "id": "playVoice",
+                    "expands": {
+                        "required": false
+                    }
+                }
+            ],
+            "name": "播放视频",
+            "id": "playVoice",
+            "expands": {}
+        }
+    ],
+    "properties": [ // 属性定义
+        {
+            "valueType": {
+                "round": "HALF_UP",
+                "scale": 2,
+                "type": "float"
+            },
+            "name": "温度",
+            "id": "temperature",
+            "expands": {
+                "type": [
+                    "read",
+                    "write",
+                    "report"
+                ],
+                "source": "device"
+            }
+        }
+    ],
+    "events": [ // 事件定义
+        {
+            "valueType": {
+                "type": "object",
+                "properties": [
+                    {
+                        "valueType": {
+                            "type": "string"
+                        },
+                        "name": "地址",
+                        "id": "address"
+                    },
+                    {
+                        "valueType": {
+                            "tz": "Asia/Shanghai",
+                            "format": "yy-mm-dd hh:mm:ss",
+                            "type": "date"
+                        },
+                        "name": "时间",
+                        "id": "time"
+                    }
+                ]
+            },
+            "name": "火灾告警",
+            "id": "alarm_fire",
+            "expands": {
+                "level": "ordinary"
+            }
+        }
+    ],
+    "tags": [ // 标签定义
+        {
+            "id": "tag",
+            "name": "标签",
+            "valueType": {
+                "type": "string"
+            },
+            "expands": {
+                "type": [
+                    "read",
+                    "write",
+                    "report"
+                ]
+            },
+            "description": "标签"
+        }
+    ]
+}

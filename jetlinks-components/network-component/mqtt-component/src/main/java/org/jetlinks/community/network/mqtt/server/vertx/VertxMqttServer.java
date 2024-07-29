@@ -54,6 +54,7 @@ public class VertxMqttServer implements MqttServer {
                 .exceptionHandler(error -> {
                     log.error(error.getMessage(), error);
                 })
+                // 这里也是一样的，先封装好处理方式，然后收到消息后直接调用
                 .endpointHandler(endpoint -> {
                     handleConnection(new VertxMqttConnection(endpoint));
                 });

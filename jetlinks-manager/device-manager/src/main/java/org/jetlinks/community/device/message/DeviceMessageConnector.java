@@ -257,7 +257,7 @@ public class DeviceMessageConnector implements DecodedClientMessageHandler {
         return this
             .getTopic(message)
             .flatMap(topic -> {
-                log.info("onMessage::收到消息发送事件 message = {}", message);
+                log.info("onMessage::收到消息发送事件 topic = {},  message = {}",topic,  message);
                 return eventBus.publish(topic, message).then();
             })
             .onErrorResume(doOnError)

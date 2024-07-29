@@ -124,6 +124,7 @@ public class MqttClientDeviceGateway extends AbstractDeviceGateway {
 
                     }
                 }
+                // 这里是封装收到订阅消息后的处理
                 return Tuples.of(_key.qos, doSubscribe(_key.topic, _key.qos));
             });
         }
@@ -157,7 +158,7 @@ public class MqttClientDeviceGateway extends AbstractDeviceGateway {
                                 msg -> handleMessage(mqttMessage, msg).then()));
 
                         decode.subscribe((messageValue)->{
-                            log.info("doSubscribe::topic = {}, qos = {}, message = {}", topic, qos, messageValue);
+                            log.info("收到处理消息 doSubscribe::topic = {}, qos = {}, message = {}", topic, qos, messageValue);
                         });
 
                         decode.subscribe(new BaseSubscriber<Message>() {

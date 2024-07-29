@@ -76,6 +76,7 @@ public class VertxMqttClient implements MqttClient {
             }
         }
         this.client = client;
+        log.info("这里设置了回调函数，收到消息的时候处理，setClient::client = {}", client);
         client
             .closeHandler(nil -> log.debug("mqtt client [{}] closed", id))
             .publishHandler(msg -> {
@@ -90,7 +91,7 @@ public class VertxMqttClient implements MqttClient {
                         .qosLevel(msg.qosLevel().value())
                         .properties(msg.properties())
                         .build();
-                    log.debug("handle mqtt message \n{}", mqttMessage);
+                    log.info("收到消息 handle mqtt message \n{}", mqttMessage);
                     subscriber
                         .findTopic(msg.topicName().replace("#", "**").replace("+", "*"))
                         .flatMapIterable(Topic::getSubscribers)
