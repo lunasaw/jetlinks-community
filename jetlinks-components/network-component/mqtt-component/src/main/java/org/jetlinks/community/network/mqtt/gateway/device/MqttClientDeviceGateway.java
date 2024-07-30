@@ -160,14 +160,6 @@ public class MqttClientDeviceGateway extends AbstractDeviceGateway {
                         decode.subscribe((messageValue)->{
                             log.info("收到处理消息 doSubscribe::topic = {}, qos = {}, message = {}", topic, qos, messageValue);
                         });
-
-                        decode.subscribe(new BaseSubscriber<Message>() {
-                            @Override
-                            protected void hookOnNext(Message value) {
-                                System.out.println(value);
-                            }
-                        });
-                        log.info("doSubscribe::topic = {}, qos = {}, decode = {}", topic, qos);
                         return decode;
 
                     })
@@ -184,6 +176,7 @@ public class MqttClientDeviceGateway extends AbstractDeviceGateway {
     }
 
     private Mono<Void> handleMessage(MqttMessage mqttMessage, DeviceMessage message) {
+        log.info("接受消息处理 handleMessage::mqttMessage = {}, message = {}", mqttMessage, message);
         monitor.receivedMessage();
         return helper
             .handleDeviceMessage(message,

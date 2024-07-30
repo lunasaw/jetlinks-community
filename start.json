@@ -53,6 +53,12 @@
     ]
 }
 
+// 产品编辑
+{
+    "productId":"",// 产品Id
+    "productDescription":""// 产品描述
+}
+
 // 物模型定义
 {
     "functions": [ // 功能定义
@@ -148,4 +154,67 @@
             "description": "标签"
         }
     ]
+}
+
+// 设备运行状态
+[
+    {
+        "productId": "1815995804089774080", // 产品id
+        "deviceId": "properties", // 属性
+        "params": {
+            "deviceId": "1815999072736047104", // 设备id
+            "properties": [
+                "temperature" // 属性key
+            ]
+        }
+    }
+]
+
+[
+        {
+            "data": {
+                "value": {
+                    "id": "1816289569773907969",
+                    "deviceId": "1815999072736047104",
+                    "property": "temperature", // 属性key
+                    "propertyName": "温度", // 属性名称
+                    "type": "float",// valueType.type
+                    "numberValue": 36.80,
+                    "value": 36.80,
+                    "formatValue": "36.80",
+                    "createTime": 1721872153119,
+                    "timestamp": 1721872153091 // 更新时间
+                },
+                "timeString": "2024-07-25 09:49:13",
+                "timestamp": 1721872153091
+            }
+        }
+    ]
+
+// 设置属性值
+{
+    "productId": "1815995804089774080", // 产品id
+    "deviceId": "properties", // 属性
+    "params": {
+        "deviceId": "1815999072736047104", // 设备id
+        "properties": [
+            {
+             "propertiesKey": "temperature", // 属性key
+             "propertiesValue": "37" // 属性值
+            }
+        ]
+    }
+}
+
+// 获取属性值
+{
+    "productId": "1815995804089774080", // 产品id
+    "params": {
+        "deviceId": "1815999072736047104", // 设备id
+        "properties": [
+            {
+             "propertiesKey": "temperature", // 属性key
+            }
+        ]
+    }
 }

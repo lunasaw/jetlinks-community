@@ -1,0 +1,241 @@
+{
+  "functions": [
+    {
+      "async": true,
+      "inputs": [],
+      "name": "重启",
+      "id": "restart",
+      "expands": {}
+    },
+    {
+      "async": true,
+      "inputs": [
+        {
+          "id": "edgeLogLv",
+          "name": "边端日志级别",
+          "valueType": {
+            "type": "enum",
+            "elements": [
+              {
+                "value": "OFF",
+                "text": "OFF"
+              },
+              {
+                "value": "ERROR",
+                "text": "ERROR"
+              },
+              {
+                "value": "WARN",
+                "text": "WARN"
+              },
+              {
+                "value": "INFO",
+                "text": "INFO"
+              },
+              {
+                "value": "DEBUG",
+                "text": "DEBUG"
+              },
+              {
+                "value": "TRACE",
+                "text": "TRACE"
+              },
+              {
+                "value": "ALL",
+                "text": "ALL"
+              }
+            ]
+          },
+          "expands": {
+            "required": true
+          }
+        }
+      ],
+      "name": " 设置边端上报日志级别",
+      "id": "edgeLogLv",
+      "expands": {},
+      "description": "日志级别：ALL<TRACE < DEBUG < INFO < WARN < ERROR<OFF"
+    }
+  ],
+  "properties": [
+    {
+      "valueType": {
+        "unit": "percent",
+        "round": "HALF_UP",
+        "scale": 1,
+        "type": "float"
+      },
+      "name": "CPU使用率",
+      "id": "cpuUsage",
+      "expands": {
+        "type": [
+          "read",
+          "report"
+        ],
+        "source": "device"
+      }
+    },
+    {
+      "valueType": {
+        "unit": "percent",
+        "round": "HALF_UP",
+        "type": "float"
+      },
+      "name": "JVM内存使用率",
+      "id": "jvmMemUsage",
+      "expands": {
+        "type": [
+          "read",
+          "report"
+        ],
+        "source": "device"
+      }
+    },
+    {
+      "valueType": {
+        "unit": "percent",
+        "round": "HALF_UP",
+        "scale": 1,
+        "type": "float"
+      },
+      "name": "系统内存使用率",
+      "id": "sysMemUsage",
+      "expands": {
+        "type": [
+          "read",
+          "report"
+        ],
+        "source": "device"
+      }
+    },
+    {
+      "valueType": {
+        "unit": "percent",
+        "round": "HALF_UP",
+        "scale": 1,
+        "type": "float"
+      },
+      "name": "磁盘使用率",
+      "id": "diskUsage",
+      "expands": {
+        "type": [
+          "read",
+          "report"
+        ],
+        "source": "device"
+      }
+    },
+    {
+      "valueType": {
+        "unit": "celsiusDegrees",
+        "round": "HALF_UP",
+        "type": "int"
+      },
+      "name": "CPU温度",
+      "id": "cpuTemp",
+      "expands": {
+        "type": [
+          "read",
+          "report"
+        ],
+        "source": "device"
+      }
+    }
+  ],
+  "events": [
+    {
+      "valueType": {
+        "type": "object",
+        "properties": [
+          {
+            "valueType": {
+              "type": "string"
+            },
+            "name": "名称",
+            "description": "资源库模板名称",
+            "id": "name"
+          },
+          {
+            "valueType": {
+              "type": "string"
+            },
+            "name": "设备ID",
+            "description": "上传模板的边缘网关设备ID",
+            "id": "deviceId"
+          },
+          {
+            "valueType": {
+              "type": "string"
+            },
+            "name": "设备名称",
+            "description": "上传模板的边缘网关设备名称",
+            "id": "deviceName"
+          },
+          {
+            "valueType": {
+              "type": "string"
+            },
+            "name": "产品ID",
+            "description": "上传模板的边缘网关所属产品ID",
+            "id": "productId"
+          },
+          {
+            "valueType": {
+              "type": "string"
+            },
+            "name": "产品名称",
+            "description": "上传模板的边缘网关所属产品名称",
+            "id": "productName"
+          },
+          {
+            "valueType": {
+              "type": "string"
+            },
+            "name": "模板内容",
+            "description": "JSON格式",
+            "id": "metadata"
+          },
+          {
+            "valueType": {
+              "type": "string"
+            },
+            "name": "通道类型",
+            "description": "通道的通讯协议，如MODBUS_TCP",
+            "id": "provider"
+          },
+          {
+            "valueType": {
+              "type": "string"
+            },
+            "name": "通讯协议",
+            "description": "边缘网关与平台的通讯协议，如MQTT",
+            "id": "transport"
+          },
+          {
+            "valueType": {
+              "elements": [
+                {
+                  "text": "正常",
+                  "value": "enabled"
+                },
+                {
+                  "text": "禁用",
+                  "value": "disabled"
+                }
+              ],
+              "type": "enum"
+            },
+            "name": "状态",
+            "id": "state"
+          }
+        ]
+      },
+      "name": "上报资源库",
+      "id": "entity-template-upload",
+      "expands": {
+        "level": "ordinary"
+      }
+    }
+  ],
+  "tags": []
+}

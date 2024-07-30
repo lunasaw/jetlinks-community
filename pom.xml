@@ -11,6 +11,9 @@
         <module>jetlinks-components</module>
         <module>jetlinks-manager</module>
         <module>jetlinks-standalone</module>
+        <module>expands-components/jetlinks-edge/edge-core</module>
+        <module>expands-components/jetlinks-edge/edge-master</module>
+
     </modules>
     <packaging>pom</packaging>
     <properties>
