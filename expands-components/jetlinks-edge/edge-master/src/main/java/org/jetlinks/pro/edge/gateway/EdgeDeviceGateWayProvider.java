@@ -1,17 +1,24 @@
 package org.jetlinks.pro.edge.gateway;
 
+import org.jetlinks.community.gateway.DeviceGateway;
+import org.jetlinks.community.gateway.supports.DeviceGatewayProperties;
+import org.jetlinks.community.gateway.supports.DeviceGatewayProvider;
+import org.jetlinks.community.network.DefaultNetworkType;
+import org.jetlinks.community.network.NetworkManager;
+import org.jetlinks.community.network.mqtt.gateway.device.MqttServerDeviceGateway;
+import org.jetlinks.community.network.mqtt.server.MqttServer;
 import org.jetlinks.core.ProtocolSupports;
 import org.jetlinks.core.device.DeviceRegistry;
+import org.jetlinks.core.device.session.DeviceSessionManager;
 import org.jetlinks.core.message.codec.DefaultTransport;
 import org.jetlinks.core.message.codec.Transport;
-import org.jetlinks.core.server.session.DeviceSessionManager;
-import org.jetlinks.pro.gateway.DeviceGateway;
-import org.jetlinks.pro.gateway.supports.DeviceGatewayProperties;
-import org.jetlinks.pro.gateway.supports.DeviceGatewayProvider;
-import org.jetlinks.pro.network.DefaultNetworkType;
-import org.jetlinks.pro.network.NetworkManager;
-import org.jetlinks.pro.network.mqtt.gateway.device.MqttServerDeviceGateway;
-import org.jetlinks.pro.network.mqtt.server.MqttServer;
+//import org.jetlinks.pro.gateway.DeviceGateway;
+//import org.jetlinks.pro.gateway.supports.DeviceGatewayProperties;
+//import org.jetlinks.pro.gateway.supports.DeviceGatewayProvider;
+//import org.jetlinks.pro.network.DefaultNetworkType;
+//import org.jetlinks.pro.network.NetworkManager;
+//import org.jetlinks.pro.network.mqtt.gateway.device.MqttServerDeviceGateway;
+//import org.jetlinks.pro.network.mqtt.server.MqttServer;
 import org.jetlinks.supports.server.DecodedClientMessageHandler;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -29,7 +36,7 @@ public class EdgeDeviceGateWayProvider implements DeviceGatewayProvider {
     private final DeviceRegistry registry;
 
     //设备会话管理器
-    private final DeviceSessionManager sessionManager;
+    private final org.jetlinks.core.device.session.DeviceSessionManager sessionManager;
 
     //客户端消息解码处理接口（解码后的设备消息处理器）
     private final DecodedClientMessageHandler messageHandler;

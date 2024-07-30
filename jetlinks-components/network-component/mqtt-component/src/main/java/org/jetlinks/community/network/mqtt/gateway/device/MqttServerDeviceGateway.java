@@ -57,7 +57,7 @@ import static org.jetlinks.core.trace.DeviceTracer.SpanName;
  * @since 1.0
  */
 @Slf4j
-class MqttServerDeviceGateway extends AbstractDeviceGateway {
+public class MqttServerDeviceGateway extends AbstractDeviceGateway {
     static AttributeKey<String> clientId = AttributeKey.stringKey("clientId");
 
     static AttributeKey<String> username = AttributeKey.stringKey("username");

@@ -1,11 +1,11 @@
 package org.jetlinks.pro.edge.gateway;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetlinks.community.gateway.AbstractDeviceGateway;
+import org.jetlinks.community.gateway.DeviceGateway;
+import org.jetlinks.community.gateway.supports.DeviceGatewayProperties;
+import org.jetlinks.community.gateway.supports.DeviceGatewayProvider;
 import org.jetlinks.core.message.codec.Transport;
-import org.jetlinks.pro.gateway.AbstractDeviceGateway;
-import org.jetlinks.pro.gateway.DeviceGateway;
-import org.jetlinks.pro.gateway.supports.DeviceGatewayProperties;
-import org.jetlinks.pro.gateway.supports.DeviceGatewayProvider;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

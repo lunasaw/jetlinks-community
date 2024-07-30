@@ -33,6 +33,8 @@ public class NetworkResource implements Serializable {
      */
     private String description;
 
+    private String clusterNodeId;
+
     /**
      * 端口信息,key为协议,如TCP,UDP.
      */
@@ -165,9 +167,6 @@ public class NetworkResource implements Serializable {
         return resource;
     }
 
-    public void setClusterNodeId(String s) {
-        log.info("setClusterNodeId::s = {}", s);
-    }
 
 
     @Getter

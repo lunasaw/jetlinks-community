@@ -3,6 +3,7 @@ package org.jetlinks.pro.edge.frp.server;
 import io.scalecube.services.annotations.ServiceMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.hswebframework.web.exception.BusinessException;
+import org.jetlinks.community.gateway.annotation.Subscribe;
 import org.jetlinks.community.network.resource.NetworkResource;
 import org.jetlinks.core.message.CommonDeviceMessage;
 import org.jetlinks.core.message.event.EventMessage;
