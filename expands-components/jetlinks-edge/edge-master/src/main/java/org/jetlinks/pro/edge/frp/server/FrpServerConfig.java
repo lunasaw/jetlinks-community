@@ -6,9 +6,9 @@ import org.hswebframework.web.bean.FastBeanCopier;
 import org.hswebframework.web.exception.ValidationException;
 import org.hswebframework.web.i18n.LocaleUtils;
 import org.hswebframework.web.validator.ValidatorUtils;
+import org.jetlinks.community.network.resource.NetworkResource;
+import org.jetlinks.community.network.resource.NetworkTransport;
 import org.jetlinks.edge.core.entity.FrpDistributeInfo;
-import org.jetlinks.pro.network.resource.NetworkResource;
-import org.jetlinks.pro.network.resource.NetworkTransport;
 import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.NotBlank;

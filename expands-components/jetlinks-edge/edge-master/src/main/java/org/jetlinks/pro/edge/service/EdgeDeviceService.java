@@ -2,7 +2,7 @@ package org.jetlinks.pro.edge.service;
 
 import org.hswebframework.ezorm.rdb.mapping.defaults.SaveResult;
 import org.hswebframework.web.crud.service.GenericReactiveCrudService;
-import org.jetlinks.pro.device.service.LocalDeviceProductService;
+import org.jetlinks.community.device.service.LocalDeviceProductService;
 import org.jetlinks.pro.edge.entity.EdgeDeviceProductEntity;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Service;

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.jetlinks.core.cluster.ServerNode;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Getter
 @Setter
+@Slf4j
 public class NetworkResource implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -161,6 +163,10 @@ public class NetworkResource implements Serializable {
             }
         }
         return resource;
+    }
+
+    public void setClusterNodeId(String s) {
+        log.info("setClusterNodeId::s = {}", s);
     }
 
 

@@ -1,8 +1,8 @@
 package org.jetlinks.pro.edge.frp.server;
 
+import org.jetlinks.community.network.resource.NetworkResource;
 import org.jetlinks.edge.core.entity.FrpDistributeInfo;
 import org.jetlinks.pro.edge.frp.entity.DistributeRequest;
-import org.jetlinks.pro.network.resource.NetworkResource;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

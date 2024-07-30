@@ -2,6 +2,8 @@ package org.jetlinks.pro.edge.frp;
 
 import io.scalecube.services.annotations.ServiceMethod;
 import org.hswebframework.web.exception.BusinessException;
+import org.jetlinks.community.network.resource.NetworkResource;
+import org.jetlinks.community.network.resource.NetworkTransport;
 import org.jetlinks.core.cluster.ServerNode;
 import org.jetlinks.core.rpc.RpcManager;
 import org.jetlinks.edge.core.entity.FrpDistributeInfo;
@@ -10,8 +12,6 @@ import org.jetlinks.pro.edge.frp.entity.FrpServerConfigInfo;
 import org.jetlinks.pro.edge.frp.server.FrpServerConfig;
 import org.jetlinks.pro.edge.frp.server.FrpServerManager;
 import org.jetlinks.pro.edge.frp.service.FrpServerService;
-import org.jetlinks.pro.network.resource.NetworkResource;
-import org.jetlinks.pro.network.resource.NetworkTransport;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

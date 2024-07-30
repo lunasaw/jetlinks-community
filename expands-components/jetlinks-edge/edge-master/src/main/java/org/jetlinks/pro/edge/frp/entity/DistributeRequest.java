@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetlinks.pro.network.resource.NetworkResource;
-import org.jetlinks.pro.network.resource.NetworkTransport;
+import org.jetlinks.community.network.resource.NetworkResource;
+import org.jetlinks.community.network.resource.NetworkTransport;
 
 import javax.validation.constraints.NotBlank;
 

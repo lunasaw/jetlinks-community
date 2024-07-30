@@ -3,10 +3,10 @@ package org.jetlinks.pro.edge.frp.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hswebframework.web.crud.events.EntitySavedEvent;
+import org.jetlinks.community.device.entity.DeviceInstanceEntity;
+import org.jetlinks.community.device.enums.DeviceState;
 import org.jetlinks.core.device.DeviceRegistry;
 import org.jetlinks.core.message.Headers;
-import org.jetlinks.pro.device.entity.DeviceInstanceEntity;
-import org.jetlinks.pro.device.enums.DeviceState;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.jetlinks.pro.PropertyConstants.accessProvider;
-import static org.jetlinks.pro.device.enums.DeviceState.offline;
+import static org.jetlinks.community.PropertyConstants.accessProvider;
+import static org.jetlinks.community.device.enums.DeviceLogType.offline;
+
 
 @Component
 @AllArgsConstructor
